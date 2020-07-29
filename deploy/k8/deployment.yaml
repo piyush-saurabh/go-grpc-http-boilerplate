@@ -1,0 +1,28 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: my-app
+spec:
+  # minReadySeconds: 30
+  selector:
+    matchLabels:
+      app: my-app
+  replicas: 2
+  template: # template for the pods
+    metadata:
+      labels:
+        app: my-app
+    spec:
+      containers:
+      - name: my-app
+        image: chip2cloud/my-app:v2
+        args:
+        - /app/server
+        - -grpc-port=9090 
+        - -http-port=9091 
+        - -db-host=mysql-hostname 
+        - -db-user=username 
+        - -db-password=password 
+        - -db-schema=database-name
+        ports:
+        - containerPort: 9091
